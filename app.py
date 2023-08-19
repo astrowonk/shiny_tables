@@ -42,7 +42,7 @@ cell_style_dict = {
     ],
     'Value2':
     lambda x: {
-        "style": 'background-color: #7FFFD4'
+        "style": 'background-color: rgb(170, 111, 241)'
     } if x > 10 else {
     },  ## these needed because the callable gets applied on the string header. 
     ## maybe the header should have its own callable tha controls class
@@ -54,20 +54,31 @@ cell_style_dict = {
     color_positive
 }
 
-app_ui = ui.page_fluid(
-    ui.output_ui("result"),
+with open("about.md", "r") as myfile:
+    about_text = myfile.read()
+
+app_ui = ui.page_bootstrap(
+    ui.head_content(
+        #     ui.tags.link({
+        #         "href":
+        #         "https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css",
+        #         "rel": "stylesheet"
+        #     }),
+        ui.tags.script({
+            'src':
+            "https://cdn.jsdelivr.net/gh/highlightjs/cdn-release@11.8.0/build/highlight.min.js"
+        }),
+        ui.tags.link({
+            "href":
+            "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/github.min.css",
+            "rel": "stylesheet"
+        }),
+        ui.tags.script('hljs.highlightAll();')),
+    ui.row(
+        ui.column(6, ui.markdown(about_text)),
+        ui.column(6, ui.output_ui("result")),
+    )
     # Legend
-    ui.panel_conditional(
-        "input.highlight",
-        ui.panel_absolute(
-            ui.span("minimum", style="background-color: silver;"),
-            ui.span("maximum", style="background-color: yellow;"),
-            top="6px",
-            right="6px",
-            class_="p-1 bg-light border",
-        ),
-    ),
-    class_="p-3",
 )
 
 

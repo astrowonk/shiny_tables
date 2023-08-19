@@ -106,7 +106,7 @@ def enhanced_from_dataframe(
         ])
     ]
     return ui.tags.table(table_header + table_body, {
-        'class': 'table table-sm table-striped',
+        'class': 'table table-striped',
         'style': 'width: 75%'
     })
 
