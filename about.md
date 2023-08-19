@@ -48,8 +48,7 @@ cell_style_dict = {
     lambda x: {
         "style": 'background-color: #7FFFD4'
     } if x > 10 else {
-    },  ## these needed because the callable gets applied on the string header. 
-    ## maybe the header should have its own callable tha controls class
+    }
     'Date':
     lambda x: {
         'class': 'table-info'
