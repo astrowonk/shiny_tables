@@ -21,7 +21,7 @@ df = pd.DataFrame([{
     "Date":
     date_list[n],
     "markdown_example":
-    f"""Everything in **here** is plain text in _Markdown_, created with an fstring for Company **{x}** """
+    f"""**Everything** in this cell is plain text in _Markdown_, created with an fstring for Company **{x}** """
 } for n, x in enumerate(the_list)])
 
 
