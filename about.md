@@ -5,6 +5,25 @@ This function will automatically generate `html.A` wrappers around a column from
 
 Conditional Formatting criteria can either be a list of tuples `(match_list,style_dict)` or a `callable` that returns the style dict if the condition is met. This allows for more complex condition formatting.
 
+This is invoked with render.ui and outputting to a ui output:
+
+```python
+        
+def server(input, output, session):
+
+    @output
+    @render.ui
+    def result():
+        return enhanced_from_dataframe(
+            df,
+            markdown_columns=['markdown_example'],
+            cell_style_dict=cell_style_dict,
+            columns=['Company', 'Date', 'Value', 'Value2', 'markdown_example'])
+
+
+```
+
+
 The code below generates the conditional formatting you see. You can also add a specific bootstrap class by putting a `className` key in the "style" dictionary.
 
 ```python
@@ -27,13 +46,13 @@ cell_style_dict = {
     ],
     'Value2':
     lambda x: {
-        "style": 'background-color: rgb(170, 111, 241)'
+        "style": 'background-color: #7FFFD4'
     } if x > 10 else {
     },  ## these needed because the callable gets applied on the string header. 
     ## maybe the header should have its own callable tha controls class
     'Date':
     lambda x: {
-        'class': 'table-danger'
+        'class': 'table-info'
     } if x.weekday() in [4, 6] else {},
     'Value':
     color_positive

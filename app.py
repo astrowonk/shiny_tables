@@ -2,6 +2,7 @@ from shiny import App, render, ui
 import pandas as pd
 from shiny_tables import enhanced_from_dataframe
 import datetime
+import shinyswatch
 
 the_list = [
     "Apple", "Google", "Yahoo", "Facebook", "Microsoft", "Amazon", "IBM",
@@ -42,13 +43,13 @@ cell_style_dict = {
     ],
     'Value2':
     lambda x: {
-        "style": 'background-color: rgb(170, 111, 241)'
+        "style": 'background-color: #7FFFD4'
     } if x > 10 else {
     },  ## these needed because the callable gets applied on the string header. 
     ## maybe the header should have its own callable tha controls class
     'Date':
     lambda x: {
-        'class': 'table-danger'
+        'class': 'table-info'
     } if x.weekday() in [4, 6] else {},
     'Value':
     color_positive
@@ -58,6 +59,7 @@ with open("about.md", "r") as myfile:
     about_text = myfile.read()
 
 app_ui = ui.page_bootstrap(
+    shinyswatch.theme.yeti(),
     ui.head_content(
         #     ui.tags.link({
         #         "href":
@@ -87,9 +89,11 @@ def server(input, output, session):
     @output
     @render.ui
     def result():
-        return enhanced_from_dataframe(df,
-                                       markdown_columns=['markdown_example'],
-                                       cell_style_dict=cell_style_dict)
+        return enhanced_from_dataframe(
+            df,
+            markdown_columns=['markdown_example'],
+            cell_style_dict=cell_style_dict,
+            columns=['Company', 'Date', 'Value', 'Value2', 'markdown_example'])
 
 
 app = App(app_ui, server)
