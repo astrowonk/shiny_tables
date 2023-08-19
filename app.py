@@ -76,7 +76,7 @@ app_ui = ui.page_bootstrap(
             "rel": "stylesheet"
         }),
         ui.tags.script('hljs.highlightAll();')),
-    ui.panel_title("Demo Bootsrap tables for Shiny Python."),
+    ui.panel_title("Demo Bootstrap tables for Shiny Python."),
     ui.row(
         ui.column(6, ui.markdown(about_text)),
         ui.column(6, ui.output_ui("result")),
