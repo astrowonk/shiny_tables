@@ -29,7 +29,7 @@ def server(input, output, session):
 ```
 
 
-The code below generates the conditional formatting you see. You can also add a specific bootstrap class by putting a `className` key in the "style" dictionary.
+The code below generates the conditional formatting you see. You can also add a specific bootstrap class by putting a `class` key in the "style" dictionary.
 
 ```python
 
