@@ -62,3 +62,4 @@ cell_style_dict = {
     color_positive
 }
 ```
+<img width="704" alt="Screenshot 2023-08-19 at 7 56 56 PM" src="https://github.com/astrowonk/shiny_tables/assets/13702392/1beb0669-4d65-4640-aa27-ede19a2f4d44">
