@@ -1,10 +1,14 @@
 
 ### Bootstrap Tables from a DataFrame
 
-This function will automatically generate `html.A` wrappers around a column from a __matched column in the same dataframe__.  The hyperlink column must match the column_name + a specific suffix. In the example to the right, the (hidden) link column is `Company_HREF`, using the default suffix.
+## Features
 
-Conditional Formatting criteria can either be a list of tuples `(match_list,style_dict)` or a `callable` that returns the style dict if the condition is met. This allows for more complex condition formatting.
+This `enhanced_from_dataframe` function creates bootstrap tables with some automatica features. 
 
+* **Automatic Links** It will automatically generate `html.A` wrappers around a column from a __matched column in the same dataframe__.  The hyperlink column must match the column_name + a specific suffix. In the example to the right, the (hidden) link column is `Company_HREF`, using the default suffix.
+* **Conditional Formatting** Criteria can either be a list of tuples `(match_list,style_dict)` or a `callable` that returns the style dict if the condition is met. This allows for more complex condition formatting.
+
+## How to use
 This is invoked with render.ui and outputting to a ui output:
 
 ```python
