@@ -160,10 +160,14 @@ def _make_row(data_dict_entry,
 
         if callable(cell_callablle := column_callable_dict.get(col_name)):
             return ui.tags.td(
-                cell_callablle(data_dict_entry, col_name)
-            )  ##need to be on the entire data_dict in case a tool tip is based on another column
-        if (thehref := f"{col_name}{link_column_suffix}") in link_names:
+                cell_callablle(
+                    data_dict_entry, col_name
+                )  ##need to be on the entire data_dict in case a tool tip or other functionality is
+                # linked to data in the same row but on another column
+            )
 
+        #add auto hyperlinks based on another column
+        if (thehref := f"{col_name}{link_column_suffix}") in link_names:
             if data_dict_entry[thehref].startswith("http"):
                 return ui.tags.td(
                     ui.tags.a(
@@ -176,19 +180,19 @@ def _make_row(data_dict_entry,
                     str(data_dict_entry[col_name]),
                     href=str(data_dict_entry[thehref], shiny_style_class_dict),
                 ))
-        # elif col_name in button_columns:
-        #     return ui.tags.td(
-        #         ui.input_action_button(
-        #             data_dict_entry[col_name].title(),
-        #             id=f'{col_name}-button-{data_dict_entry[col_name]}'))
+
+        #markdown a column
         elif col_name in markdown_columns:
             return ui.tags.td(ui.markdown(data_dict_entry[col_name]), )
+
+        #format folats and ints
         elif isinstance(data_dict_entry[col_name], float):
             return ui.tags.td(
                 f"{nan_to_num(data_dict_entry[col_name]):{float_format}}",
                 shiny_style_class_dict)
         elif isinstance(data_dict_entry[col_name], int):
-            return ui.tags.td(f"{data_dict_entry[col_name]:,}")
+            return ui.tags.td(f"{data_dict_entry[col_name]:,}"
+                              )  #should probably be customizable someday
         elif date_format and isinstance(data_dict_entry[col_name],
                                         pd.Timestamp):
 
