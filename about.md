@@ -7,7 +7,7 @@ This `enhanced_from_dataframe` function creates bootstrap tables with some autom
 
 * **Automatic Links** It will automatically generate `ui.tags.A` wrappers around a column from a __matched column in the same dataframe__.  The hyperlink column must match the column_name + a specific suffix. In the example to the right, the (hidden) link column is `Company_HREF`, using the default suffix.
 * **Conditional Formatting** Criteria can either be a list of tuples `(match_list,style_dict)` or a `callable` that returns the style dict if the condition is met. This allows for more complex condition formatting.
-* **Any Callable can wrap a cell** Pass a callable to the function to customize the content of any column. Turn it into a button, link, wrap it in any UII elements you can create in Shiny.
+* **Any Callable can wrap a cell** Pass a callable to the function to customize the content of any column. Turn it into a button, link, wrap it in any UI elements you can create in Shiny.
 
 ## How to use
 This is invoked with render.ui and outputting to a ui output:
