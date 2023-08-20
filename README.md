@@ -63,4 +63,20 @@ cell_style_dict = {
     color_positive
 }
 ```
+
+This code has a callable wrapper for the Company2 column:
+
+```python
+
+def wrap_company(row, col_name):
+    return experimental.ui.tooltip(
+        ui.tags.button(row[col_name], ),
+        f"This is a tool tip for {row[col_name]} that shows the link {row['Company_HREF']}"
+    )
+
+
+
+```
+
+
 <img width="704" alt="Screenshot 2023-08-19 at 7 56 56 PM" src="https://github.com/astrowonk/shiny_tables/assets/13702392/1beb0669-4d65-4640-aa27-ede19a2f4d44">
