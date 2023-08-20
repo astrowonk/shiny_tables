@@ -69,11 +69,11 @@ def enhanced_from_dataframe(
                          key=lambda x: column_order_dict.get(x, float('inf')))
     else:
         columns = df.columns
-    data_dict = df[columns].to_dict(orient='records')
+    data_dict = df.to_dict(orient='records')
     if cell_style_dict is None:
         cell_style_dict = {}
 
-    col_names = list(data_dict[0].keys())
+    col_names = columns
     if header_callable is None:
         header_column_cells = [
             ui.tags.th(_clean_header_names(x),
