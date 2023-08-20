@@ -37,7 +37,9 @@ def enhanced_from_dataframe(
     link_target=None,
     markdown_columns=None,
     column_callable_dict={},
-    process_header_classes=False,  ## if true the cell style dict callable  will apply to header
+    process_header_classes=False,
+    className="table table-striped",
+    style="width: 75%",  ## if true the cell style dict callable  will apply to header
     **table_kwargs):
     """make a shiny bootstrap table from a pandas dataframe but add hyperlinks based on matching column names. Conditionally style a column or columns
     
@@ -107,8 +109,8 @@ def enhanced_from_dataframe(
         ])
     ]
     return ui.tags.table(table_header + table_body, {
-        'class': 'table table-striped',
-        'style': 'width: 75%'
+        'class': className,
+        'style': style
     })
 
 
