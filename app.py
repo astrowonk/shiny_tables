@@ -1,4 +1,4 @@
-from shiny import App, render, ui
+from shiny import App, render, ui, experimental
 import pandas as pd
 from shiny_tables import enhanced_from_dataframe
 import datetime
@@ -13,6 +13,8 @@ date_list = pd.date_range(start_date, periods=len(the_list)).tolist()
 
 df = pd.DataFrame([{
     'Company':
+    x,
+    'Company2':
     x,
     "Company_HREF":
     f"https://{x.lower()}.com",
@@ -58,6 +60,14 @@ cell_style_dict = {
 with open("about.md", "r") as myfile:
     about_text = myfile.read()
 
+
+def wrap_company(row, col_name):
+    return experimental.ui.tooltip(
+        ui.tags.button(row[col_name], ),
+        f"This is a tool tip for {row[col_name]} that shows the link {row['Company_HREF']}"
+    )
+
+
 app_ui = ui.page_bootstrap(
     shinyswatch.theme.yeti(),
     ui.head_content(
@@ -93,7 +103,11 @@ def server(input, output, session):
             df,
             markdown_columns=['markdown_example'],
             cell_style_dict=cell_style_dict,
-            columns=['Company', 'Date', 'Value', 'Value2', 'markdown_example'])
+            columns=[
+                'Company', 'Company2', 'Date', 'Value', 'Value2',
+                'markdown_example'
+            ],
+            column_callable_dict={'Company2': wrap_company})
 
 
 app = App(app_ui, server)

@@ -35,11 +35,11 @@ def enhanced_from_dataframe(
     date_format="%Y-%m-%d",
     header_callable=None,
     link_target=None,
-    button_columns=None,
     markdown_columns=None,
+    column_callable_dict={},
     process_header_classes=False,  ## if true the cell style dict callable  will apply to header
     **table_kwargs):
-    """make a dash table from a pandas dataframe but add hyperlinks based on matching column names. Conditionally style a column or columns
+    """make a shiny bootstrap table from a pandas dataframe but add hyperlinks based on matching column names. Conditionally style a column or columns
     
     cell_style_dict: dict of {column_name: {condition: style_dict}}
     
@@ -101,8 +101,9 @@ def enhanced_from_dataframe(
                       float_format=float_format,
                       date_format=date_format,
                       link_target=link_target,
-                      button_columns=button_columns,
-                      markdown_columns=markdown_columns) for x in data_dict
+                      markdown_columns=markdown_columns,
+                      column_callable_dict=column_callable_dict)
+            for x in data_dict
         ])
     ]
     return ui.tags.table(table_header + table_body, {
@@ -119,7 +120,8 @@ def _make_row(data_dict_entry,
               date_format=None,
               link_target=None,
               button_columns=None,
-              markdown_columns=None):
+              markdown_columns=None,
+              column_callable_dict=None):
     if button_columns is None:
         button_columns = []
     if markdown_columns is None:
@@ -133,9 +135,12 @@ def _make_row(data_dict_entry,
     def process_table_cell(
         col_name,
         link_names,
+        column_callable_dict,
     ):
         """Add links to tables in the right way and handle nan strings."""
         shiny_style_class_dict = {}
+
+        ## handle styles and classes
         if cell_style_entry := cell_style_dict.get(col_name):
             if isinstance(cell_style_entry, list):
                 for item in cell_style_entry:
@@ -150,8 +155,13 @@ def _make_row(data_dict_entry,
                     shiny_style_class_dict = theStyle
             else:
                 shiny_style_class_dict = {}
-        print(col_name)
-        print(shiny_style_class_dict)
+
+        #handle the content of the table cell itself
+
+        if callable(cell_callablle := column_callable_dict.get(col_name)):
+            return ui.tags.td(
+                cell_callablle(data_dict_entry, col_name)
+            )  ##need to be on the entire data_dict in case a tool tip is based on another column
         if (thehref := f"{col_name}{link_column_suffix}") in link_names:
 
             if data_dict_entry[thehref].startswith("http"):
@@ -188,6 +198,8 @@ def _make_row(data_dict_entry,
 
     link_names = [x for x in col_names if str(x).endswith(link_column_suffix)]
     return ui.tags.tr([
-        process_table_cell(x, link_names) for x in col_names
-        if not str(x).endswith(link_column_suffix)
+        process_table_cell(x,
+                           link_names,
+                           column_callable_dict=column_callable_dict)
+        for x in col_names if not str(x).endswith(link_column_suffix)
     ])
