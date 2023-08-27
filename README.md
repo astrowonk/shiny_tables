@@ -1,6 +1,6 @@
 ### Bootstrap tables from DataFrames
 
-A very early rough implementation for Python Shiny of my [Dash Dataframe Tables package](https://github.com/astrowonk/dash_dataframe_table). So far at least one odd bug with conditional formatting.
+A very early rough implementation for Python Shiny of my [Dash Dataframe Tables package](https://github.com/astrowonk/dash_dataframe_table). [See A Live Demo App Here.](https://marcoshuerta.com/shiny/shiny_tables/)
 
 ## Features
 
