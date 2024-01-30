@@ -193,12 +193,13 @@ def _make_row(data_dict_entry,
                 f"{nan_to_num(data_dict_entry[col_name]):{float_format}}",
                 shiny_style_class_dict)
         elif isinstance(data_dict_entry[col_name], int):
-            return ui.tags.td(f"{data_dict_entry[col_name]:,}"
-                              )  #should probably be customizable someday
+            return ui.tags.td(f"{data_dict_entry[col_name]:,}",shiny_style_class_dict)
         elif date_format and isinstance(data_dict_entry[col_name],
                                         pd.Timestamp):
-
             return ui.tags.td(data_dict_entry[col_name].strftime(date_format),
+                              shiny_style_class_dict)
+        elif isinstance(data_dict_entry[col_name], str):
+            return ui.tags.td(data_dict_entry[col_name],
                               shiny_style_class_dict)
         return ui.tags.td(str(data_dict_entry[col_name]), )
 
